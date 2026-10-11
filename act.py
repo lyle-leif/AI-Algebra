@@ -31,12 +31,10 @@ new_student=np.array([
             [2, 2, 2, 2],
             [1, 1, 1, 1]],dtype=float)
 
-
-
 student_list = ["Argona, Charmaine", "Esguerra, Lyle Daniel", "Opinion, Zairus", "Seda, Emmanuel" ]
 
-for d, x in zip(student_list, new_student):
-    score=x@weights    
-    print(f"\n{d}: {x}")
+for d, y in zip(student_list, new_student):
+    score=y@weights    
+    print(f"\n{d}: {y}")
     print(f"Predicted Scholarship Score: {score:.2f}")
 
