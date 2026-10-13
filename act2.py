@@ -53,23 +53,64 @@ predictions = A @ weights
 print("Raw scores:", predictions)
 print("Original:",b)
 
-new_applicant = pd.DataFrame ({
-    "GPA": [1.35],
-    "Exam": [92],
-    "Income": [22000],
-    "Leadership": [9]
-})
+names = ["Charmaine Argona",
+         "Lyle Esguerra",
+         "Zairus Opinion",
+         "Loraine Relativo",
+         "Emmanuel Seda"]
 
-print("\nNew Applicant Information")
+data = {
+    "GPA": [1.00, 2.00, 2.50, 1.25, 3.00],
+    "Exam": [99, 67, 85, 90, 60],
+    "Income": [13000, 50000, 30000, 10000, 150000],
+    "Leadership": [8, 7, 10, 8, 9]
+}
 
-new_student = np.array([1.35,92,22000,9])
-prediction = new_student @ weights
+df = pd.DataFrame(data)
 
-print(new_applicant)
+G = np.array([
+    [1.00, 99, 13000, 8],
+    [2.00, 67, 50000, 7],
+    [2.50, 85, 30000, 10],
+    [1.25, 90, 10000, 8],
+    [3.00, 60, 150000, 9]
+], dtype=float)
+
+print("\nNEW APPLICANT INFORMATION")
+print(df)
+
+predictions = G @ weights
+result = []
+
 print("\nSCHOLARSHIP PREDICTION")
 
-print(f"Prediction Score: {prediction:.4f}")
-if prediction >= 0.5:
-    print("Scholarship Awarded: YES")
-else:
-    print("Scholarship Awarded: NO")
+for prediction, name in zip(predictions, names):
+    print(f"\nName: {name}")
+    print(f"Prediction Score: {prediction:.4f}")
+
+    if prediction >= 0.5:
+        print("Scholarship Awarded: YES")
+        result.append("YES")
+    else:
+        print("Scholarship Awarded: NO")
+        result.append("NO")
+
+new_score = []
+
+for x in predictions:
+    new_score.append(round(x, 2))
+
+new_data = {
+    "Name" : names,
+    "GPA": data["GPA"],
+    "Exam": data["Exam"],
+    "Income": data["Income"],
+    "Leadership": data["Leadership"],
+    "Prediction Score": new_score,
+    "Scholarship Awarded": result
+}
+
+dt = pd.DataFrame(new_data)
+
+print("\nFINAL SCHOLARSHIP APPLICANT RECORDS")
+print(dt)
